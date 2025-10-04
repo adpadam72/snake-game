@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Snake — Play on PC & Mobile</title>
+  <style>
+    :root{--bg:#0f1724;--panel:#0b1220;--accent:#06b6d4;--muted:#94a3b8}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    body{display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#071028 0%,var(--bg) 100%);color:white}
+    .wrap{width:min(980px,96vw);max-height:96vh;background:var(--panel);border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.6);display:grid;grid-template-columns:1fr 300px;gap:18px;padding:18px}
+    @media (max-width:880px){.wrap{grid-template-columns:1fr;max-height:none;padding-bottom:86px}}
+
+    .game-area{background:#020617;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:12px}
+    canvas{background:linear-gradient(180deg,#071822,#02111a);border-radius:6px;width:100%;height:100%;touch-action:none}
+
+    .panel{padding:12px;display:flex;flex-direction:column;gap:12px}
+    .panel h1{margin:0;font-size:20px}
+    .row{display:flex;gap:8px;align-items:center}
+    .score{font-size:28px;color:var(--accent);font-weight:700}
+    .btn{background:transparent;border:1px solid #21314a;padding:8px 10px;border-radius:8px;cursor:pointer;color:var(--muted)}
+    .btn.primary{background:var(--accent);color:#02131a;border:0}
+    .small{font-size:13px;color:var(--muted)}
+
+    .controls{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;justify-items:center}
+    .dpad{width:170px;height:170px;border-radius:12px;background:linear-gradient(180deg,#071a20,#051018);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);place-items:center}
+    .dpad button{width:56px;height:56px;border-radius:10px;border:0;background:transparent;color:var(--muted);font-weight:700}
+    .dpad .pad-btn{background:#0c1720;border-radius:10px;width:56px;height:56px;display:flex;align-items:center;justify-content:center}
+
+    .footer{position:fixed;left:0;right:0;bottom:8px;display:flex;justify-content:center;pointer-events:none}
+    .toast{background:#081826;padding:8px 12px;border-radius:999px;color:var(--muted);border:1px solid rgba(255,255,255,0.03);pointer-events:auto}
+
+    .hint{font-size:13px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap" role="application">
+    <div class="game-area">
+      <canvas id="gameCanvas" width="640" height="640" aria-label="Snake game canvas"></canvas>
+    </div>
+    <div class="panel" aria-hidden="false">
+      <h1>Snake — Play on PC & Mobile</h1>
+      <div class="row"><div class="score" id="score">0</div><div style="flex:1"></div><button class="btn" id="pauseBtn">Pause</button><button class="btn primary" id="restartBtn">Restart</button></div>
+
+      <div class="row"><div class="small">Speed</div><input id="speedRange" type="range" min="4" max="18" value="8"></div>
+      <div class="row"><div class="small">Grid size</div><select id="gridSize"><option value="16">16 x 16</option><option value="20" selected>20 x 20</option><option value="30">30 x 30</option></select></div>
+
+      <div class="row"><d
